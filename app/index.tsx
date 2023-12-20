@@ -2,6 +2,7 @@ import { View, StyleSheet, Button, TouchableOpacity } from 'react-native'
 import React, { useRef, useState } from 'react'
 import MapView, { Region } from 'react-native-maps'
 import { Ionicons } from '@expo/vector-icons'
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
 const INITIAL_REGION = {
     latitude: 37.78825,
@@ -17,7 +18,7 @@ const index = () => {
 
     const onRegionChange = (region: Region) => {
         //setRegion(region)
-        console.log(region)
+        // console.log(region)
     }
 
     const focusMap = () => {
@@ -37,14 +38,53 @@ const index = () => {
 
     return (
         <View style={styles.container}>
+            <GooglePlacesAutocomplete 
+                placeholder='Search'
+                fetchDetails
+                onPress={(data, details = null) => {
+                    // 'details' is provided when fetchDetails = true
+                    console.log(data, details);
+                    const point = details?.geometry?.location
+                    if (!point) return
+                    setRegion({
+                        latitude: point.lat,
+                        longitude: point.lng,
+                        latitudeDelta: 0.0922, // Zoom level
+                        longitudeDelta: 0.0421, // Zoom level
+                    })
+                }}
+                query={{
+                    key: process.env.EXPO_PUBLIC_GOOGLE_PLACES_API_KEY,
+                    language: 'en',
+                }}
+                styles={{
+                    textInputContainer: {
+                        backgroundColor: 'rgba(0,0,0,0)',
+                        borderTopWidth: 0,
+                        borderBottomWidth: 0,
+                    },
+                    textInput: {
+                        marginLeft: 0,
+                        marginRight: 0,
+                        height: 38,
+                        color: '#5d5d5d',
+                        fontSize: 16,
+                    },
+                    predefinedPlacesDescription: {
+                        color: '#1faadb',
+                    },
+                }}
+                onFail={(error) => console.error(error)}
+            />
             <MapView
                 provider='google'
-                style={styles.map}
+                style={[styles.map, StyleSheet.absoluteFill]}
                 mapType='hybrid'
                 zoomControlEnabled
                 showsUserLocation
                 showsMyLocationButton
                 initialRegion={region}
+                region={region}
                 onRegionChange={onRegionChange}
             />
             <View style={styles.btnContainer}>
@@ -65,6 +105,7 @@ const styles = StyleSheet.create({
     },
     map: {
         flex: 1,
+        zIndex: -1,
     },
     btnContainer: {
         position: 'absolute',
