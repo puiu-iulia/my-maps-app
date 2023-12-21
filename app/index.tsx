@@ -1,6 +1,6 @@
 import { View, StyleSheet, Button, TouchableOpacity } from 'react-native'
 import React, { useRef, useState } from 'react'
-import MapView, { Region } from 'react-native-maps'
+import MapView, { Circle, Polygon, Polyline, Region } from 'react-native-maps'
 import { Ionicons } from '@expo/vector-icons'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
@@ -33,7 +33,7 @@ const index = () => {
     }
 
     const zoom = () => {
-        mapRef.current?.animateCamera({ zoom: 16 })
+        mapRef.current?.animateCamera({ zoom: 13 })
     }
 
     return (
@@ -86,7 +86,32 @@ const index = () => {
                 initialRegion={region}
                 region={region}
                 onRegionChange={onRegionChange}
-            />
+            >
+                <Polyline 
+                    coordinates={[
+                        { latitude: 37.78825, longitude: -122.4324 },
+                        { latitude: 37.79486, longitude: -122.4596 },
+                        { latitude: 37.80255, longitude: -122.4351 },
+                    ]}
+                    strokeColor='red'
+                    strokeWidth={6}
+                />
+                <Circle
+                    center={{ latitude: 37.78825, longitude: -122.4324 }}
+                    radius={200}
+                    strokeWidth={6}
+                    strokeColor='green'
+                />
+                <Polygon 
+                    coordinates={[
+                        { latitude: 37.78825, longitude: -122.4324 },
+                        { latitude: 37.79486, longitude: -122.4496 },
+                        { latitude: 37.80255, longitude: -122.4351 },
+                    ]}
+                    strokeColor='blue'
+                    strokeWidth={6}
+                />
+            </MapView>
             <View style={styles.btnContainer}>
                 <TouchableOpacity style={styles.btn} onPress={focusMap} >
                     <Ionicons name='business' size={24} />
