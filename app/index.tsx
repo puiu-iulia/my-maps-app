@@ -1,6 +1,6 @@
 import { View, StyleSheet, Button, TouchableOpacity } from 'react-native'
 import React, { useRef, useState } from 'react'
-import MapView, { Circle, Polygon, Polyline, Region } from 'react-native-maps'
+import MapView, { Callout, Circle, Marker, Polygon, Polyline, Region } from 'react-native-maps'
 import { Ionicons } from '@expo/vector-icons'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
@@ -111,6 +111,18 @@ const index = () => {
                     strokeColor='blue'
                     strokeWidth={6}
                 />
+                <Marker 
+                    coordinate={{ latitude: 37.802526, longitude: -122.4324 }}
+                    title='San Francisco'
+                    description='City by the Bay'
+                    pinColor='green'
+                    image={require('../assets/images/favicon.png')}
+                    // onPress={() => console.log('Marker pressed')}
+                >
+                    <Callout 
+                        onPress={() => console.log('Callout pressed')}
+                    />
+                </Marker>
             </MapView>
             <View style={styles.btnContainer}>
                 <TouchableOpacity style={styles.btn} onPress={focusMap} >
