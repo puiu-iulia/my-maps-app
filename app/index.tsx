@@ -1,6 +1,7 @@
 import { View, StyleSheet, Button, TouchableOpacity } from 'react-native'
 import React, { useRef, useState } from 'react'
-import MapView, { Callout, Circle, Marker, Polygon, Polyline, Region } from 'react-native-maps'
+import { Callout, Circle, Marker, Polygon, Polyline, Region } from 'react-native-maps'
+import MapView from 'react-native-map-clustering'
 import { Ionicons } from '@expo/vector-icons'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
@@ -14,7 +15,7 @@ const INITIAL_REGION = {
 const index = () => {
 
     const [region, setRegion] = useState(INITIAL_REGION)
-    const mapRef = useRef<MapView>(null)
+    const mapRef = useRef<any>(null)
 
     const onRegionChange = (region: Region) => {
         //setRegion(region)
@@ -123,6 +124,22 @@ const index = () => {
                         onPress={() => console.log('Callout pressed')}
                     />
                 </Marker>
+                <Marker 
+                    coordinate={{ latitude: 37.78825, longitude: -122.4324 }}
+                    title='San Francisco'
+                    description='City by the Bay'
+                    pinColor='green'
+                    image={require('../assets/images/favicon.png')}
+                    // onPress={() => console.log('Marker pressed')}
+                />
+                <Marker 
+                    coordinate={{ latitude: 37.81234, longitude: -122.4324 }}
+                    title='San Francisco'
+                    description='City by the Bay'
+                    pinColor='green'
+                    image={require('../assets/images/favicon.png')}
+                    // onPress={() => console.log('Marker pressed')}
+                />
             </MapView>
             <View style={styles.btnContainer}>
                 <TouchableOpacity style={styles.btn} onPress={focusMap} >
