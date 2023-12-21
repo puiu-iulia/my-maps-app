@@ -16,12 +16,19 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "tech.pisoft.mymaps"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "tech.pisoft.mymaps",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY"
+        }
       }
     },
     "web": {
